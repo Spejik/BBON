@@ -30,11 +30,12 @@ export declare namespace __BBON_Common {
      */
     function CombineChars(...chars: string[]): string;
     /**
-     * Získá base64 hmac-sha256 checksum stringu
+     * Gets base64 hmac-sha256 checksum of a string
      */
     function GetChecksum(str: string): string;
     /**
-     * Získá array všech záznamů v objektu
+     * Gets an array of all keys (recursively) in an object
+     * TODO
      */
     function DeepEntries(obj: object, includePath?: boolean): Set<string>;
     let HMAC_KEY: string;

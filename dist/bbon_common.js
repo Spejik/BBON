@@ -55,14 +55,15 @@ var __BBON_Common;
     }
     __BBON_Common.CombineChars = CombineChars;
     /**
-     * Získá base64 hmac-sha256 checksum stringu
+     * Gets base64 hmac-sha256 checksum of a string
      */
     function GetChecksum(str) {
         return crypto_1.default.createHmac("sha256", __BBON_Common.HMAC_KEY).update(str).digest("base64");
     }
     __BBON_Common.GetChecksum = GetChecksum;
     /**
-     * Získá array všech záznamů v objektu
+     * Gets an array of all keys (recursively) in an object
+     * TODO
      */
     function DeepEntries(obj, includePath = false) {
         let walked = [];

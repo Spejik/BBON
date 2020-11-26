@@ -211,22 +211,22 @@
         "signature": "9eb0ae9fa333acfc2dcbe6a7eaa2ab8be46b97ca259982c797c39167823235d5",
         "affectsGlobalScope": false
       },
-      "./src/bbon/bbon_common.ts": {
-        "version": "842e981f728891c6f75f6af274ae47c9f7699205caac08544170a8f97a2a0570",
-        "signature": "afb077b270b9e49d0c5f2e3530f354caa29ab3b97288cfdae908fdc0255888b2",
+      "./src/bbon_common.ts": {
+        "version": "3760d9fd1273695e42c4c212ac5c6f4085f55b066caad09bef1b83c0f6d329c7",
+        "signature": "4dc12ec58f445f82649af266f5cc928f9f60f749bdef3238f6a363cedaacb40a",
         "affectsGlobalScope": false
       },
-      "./src/bbon/bbon_serializer.ts": {
+      "./src/bbon_serializer.ts": {
         "version": "722472f5e87a1eee626da29a859d833b567ab0a00dee736ca7a65aa1af644d3e",
         "signature": "300dafba4a895305324440fbfd1ab2d138170494a44dea950858fcb3517c5d8d",
         "affectsGlobalScope": false
       },
-      "./src/bbon/bbon_unserializer.ts": {
+      "./src/bbon_unserializer.ts": {
         "version": "5923d4c0639e6b73f6417701105ea8d028032a48219f295cf83cc71931a7eb8d",
         "signature": "a7cd396a3ad56b3a0b28c2ebb39ffaf40102e8200419ff638a21bf075b45da09",
         "affectsGlobalScope": false
       },
-      "./src/bbon/bbon.ts": {
+      "./src/bbon.ts": {
         "version": "90b6d5e82a6a9d2a21f96f4aae76da37b98fa09b7b4205dd8260ff9294b3176b",
         "signature": "67dc6998625a3092ce5b9e5659a1cc8a0255fee67bde8bcbe13ce823eda7a568",
         "affectsGlobalScope": false
@@ -496,7 +496,6 @@
       "experimentalDecorators": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
-      "watch": true,
       "configFilePath": "./tsconfig.json"
     },
     "referencedMap": {
@@ -667,19 +666,19 @@
       "./node_modules/@types/node/zlib.d.ts": [
         "./node_modules/@types/node/stream.d.ts"
       ],
-      "./src/bbon/bbon.ts": [
-        "./src/bbon/bbon_common.ts",
-        "./src/bbon/bbon_serializer.ts",
-        "./src/bbon/bbon_unserializer.ts"
+      "./src/bbon.ts": [
+        "./src/bbon_common.ts",
+        "./src/bbon_serializer.ts",
+        "./src/bbon_unserializer.ts"
       ],
-      "./src/bbon/bbon_common.ts": [
+      "./src/bbon_common.ts": [
         "./node_modules/@types/node/crypto.d.ts"
       ],
-      "./src/bbon/bbon_serializer.ts": [
-        "./src/bbon/bbon_common.ts"
+      "./src/bbon_serializer.ts": [
+        "./src/bbon_common.ts"
       ],
-      "./src/bbon/bbon_unserializer.ts": [
-        "./src/bbon/bbon_common.ts"
+      "./src/bbon_unserializer.ts": [
+        "./src/bbon_common.ts"
       ]
     },
     "exportedModulesMap": {
@@ -941,10 +940,10 @@
       "./node_modules/@types/node/worker_threads.d.ts",
       "./node_modules/@types/node/zlib.d.ts",
       "./node_modules/tslib/tslib.d.ts",
-      "./src/bbon/bbon.ts",
-      "./src/bbon/bbon_common.ts",
-      "./src/bbon/bbon_serializer.ts",
-      "./src/bbon/bbon_unserializer.ts",
+      "./src/bbon.ts",
+      "./src/bbon_common.ts",
+      "./src/bbon_serializer.ts",
+      "./src/bbon_unserializer.ts",
       "../../../node_modules/@types/color-name/index.d.ts"
     ]
   },

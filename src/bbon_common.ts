@@ -59,14 +59,15 @@ export namespace __BBON_Common {
     }
 
     /**
-     * Získá base64 hmac-sha256 checksum stringu
+     * Gets base64 hmac-sha256 checksum of a string
      */
     export function GetChecksum(str: string): string {
         return crypto.createHmac("sha256", HMAC_KEY).update(str).digest("base64");
     }
 
     /**
-     * Získá array všech záznamů v objektu
+     * Gets an array of all keys (recursively) in an object
+     * TODO
      */
     export function DeepEntries(obj: object, includePath: boolean = false): Set<string> {
         let walked = [];
