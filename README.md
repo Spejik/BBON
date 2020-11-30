@@ -3,4 +3,4 @@ BeXCool Binary Object Notation
 
 ### Installation
 
-`npm install bbon`
+`git clone https://github.com/Spejik/BBON.git`
