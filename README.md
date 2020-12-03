@@ -18,9 +18,9 @@ See the [releases tab](https://github.com/Spejik/BBON/releases)
   
   - [Typescript](#typescript)
   
-  - [C++](#cpp)
+  - [C++](#c++)
   
-  - [C#](#csharp) 
+  - [C#](#c#) 
   
   - [PHP](#php)
 
