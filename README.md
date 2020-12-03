@@ -1,22 +1,35 @@
+# IN DEVELOPMENT, DO NOT USE FOR ANYTHING ELSE THAN TESTING
+
 # BBON
 BeXCool Binary Object Notation
 
+The project is still in alpha and should not be used in production
 
-⚠ The project is still in alpha and should not be used in production
-
-
-### Installation
+## Installation
 
 See the [releases tab](https://github.com/Spejik/BBON/releases)
 
 
-### Table of contents
-How to use
-  [Javascript](#javascript)
-  [PHP](#PHP)
+## Table of contents
 
+### How to use
 
-### Javascript
+  - [Javascript](#javascript)
+  
+  - [Typescript](#typescript)
+  
+  - [C++](#cpp)
+  
+  - [C#](#csharp) 
+  
+  - [PHP](#php)
 
+## Javascript
 
-### PHP
+## Typescript
+
+## C++
+
+## C#
+
+## PHP
