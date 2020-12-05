@@ -67,7 +67,6 @@ export namespace __BBON_Common {
 
     /**
      * Gets an array of all keys (recursively) in an object
-     * TODO
      */
     export function DeepEntries(obj: object, includePath: boolean = false): Set<string> {
         let walked = [];
@@ -111,6 +110,8 @@ export namespace __BBON_Common {
     export const HEADER_CLOSE = CombineChars("=?]");
     export const HEADER_KEYS_START = CombineChars("=+[");
     export const HEADER_KEYS_CLOSE = CombineChars("=+]");
+    export const HEADER_KEYS_VALUE = CombineChars("=&:");
+    export const HEADER_KEYS_SEPAR = CombineChars("=&;");
     export const HEADER_CHECKSUM_START = CombineChars("=![");
     export const HEADER_CHECKSUM_CLOSE = CombineChars("=!]");
 
@@ -120,7 +121,7 @@ export namespace __BBON_Common {
     export const CONTENT_ID_POINTER_CLOSE = CombineChars("##}");
     export const CONTENT_VALUE_START = CombineChars("#:{");
     export const CONTENT_VALUE_CLOSE = CombineChars("#:}");
-    export const CONTENT_VALUE_VALUE = CombineChars("#:;");
+    export const CONTENT_VALUE_SEPAR = CombineChars("#:;");
 
     // Content Types
     export const TYPE_BOOL = CombineChars("#t:b:");
@@ -132,5 +133,5 @@ export namespace __BBON_Common {
     export const TYPE_OBJECT_CLOSE = CombineChars("#t:o]");
     export const TYPE_ARRAY_START = CombineChars("#t:a[");
     export const TYPE_ARRAY_CLOSE = CombineChars("#t:a]");
-    export const TYPE_ARRAY_VALUE = CombineChars("#t:a;");
+    export const TYPE_ARRAY_SEPAR = CombineChars("#t:a;");
 }

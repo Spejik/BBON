@@ -35,7 +35,6 @@ export declare namespace __BBON_Common {
     function GetChecksum(str: string): string;
     /**
      * Gets an array of all keys (recursively) in an object
-     * TODO
      */
     function DeepEntries(obj: object, includePath?: boolean): Set<string>;
     let HMAC_KEY: string;
@@ -46,6 +45,8 @@ export declare namespace __BBON_Common {
     const HEADER_CLOSE: string;
     const HEADER_KEYS_START: string;
     const HEADER_KEYS_CLOSE: string;
+    const HEADER_KEYS_VALUE: string;
+    const HEADER_KEYS_SEPAR: string;
     const HEADER_CHECKSUM_START: string;
     const HEADER_CHECKSUM_CLOSE: string;
     const CONTENT_MAIN = "BBON_MAIN";
@@ -53,7 +54,7 @@ export declare namespace __BBON_Common {
     const CONTENT_ID_POINTER_CLOSE: string;
     const CONTENT_VALUE_START: string;
     const CONTENT_VALUE_CLOSE: string;
-    const CONTENT_VALUE_VALUE: string;
+    const CONTENT_VALUE_SEPAR: string;
     const TYPE_BOOL: string;
     const TYPE_STRING_START: string;
     const TYPE_STRING_CLOSE: string;
@@ -63,6 +64,5 @@ export declare namespace __BBON_Common {
     const TYPE_OBJECT_CLOSE: string;
     const TYPE_ARRAY_START: string;
     const TYPE_ARRAY_CLOSE: string;
-    const TYPE_ARRAY_VALUE: string;
+    const TYPE_ARRAY_SEPAR: string;
 }
-//# sourceMappingURL=bbon_common.d.ts.map

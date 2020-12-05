@@ -10,4 +10,3 @@ class __BBON_Unserializer {
     }
 }
 exports.__BBON_Unserializer = __BBON_Unserializer;
-//# sourceMappingURL=bbon_unserializer.js.map

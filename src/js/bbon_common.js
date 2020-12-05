@@ -63,7 +63,6 @@ var __BBON_Common;
     __BBON_Common.GetChecksum = GetChecksum;
     /**
      * Gets an array of all keys (recursively) in an object
-     * TODO
      */
     function DeepEntries(obj, includePath = false) {
         let walked = [];
@@ -106,6 +105,8 @@ var __BBON_Common;
     __BBON_Common.HEADER_CLOSE = CombineChars("=?]");
     __BBON_Common.HEADER_KEYS_START = CombineChars("=+[");
     __BBON_Common.HEADER_KEYS_CLOSE = CombineChars("=+]");
+    __BBON_Common.HEADER_KEYS_VALUE = CombineChars("=&:");
+    __BBON_Common.HEADER_KEYS_SEPAR = CombineChars("=&;");
     __BBON_Common.HEADER_CHECKSUM_START = CombineChars("=![");
     __BBON_Common.HEADER_CHECKSUM_CLOSE = CombineChars("=!]");
     // Content
@@ -114,7 +115,7 @@ var __BBON_Common;
     __BBON_Common.CONTENT_ID_POINTER_CLOSE = CombineChars("##}");
     __BBON_Common.CONTENT_VALUE_START = CombineChars("#:{");
     __BBON_Common.CONTENT_VALUE_CLOSE = CombineChars("#:}");
-    __BBON_Common.CONTENT_VALUE_VALUE = CombineChars("#:;");
+    __BBON_Common.CONTENT_VALUE_SEPAR = CombineChars("#:;");
     // Content Types
     __BBON_Common.TYPE_BOOL = CombineChars("#t:b:");
     __BBON_Common.TYPE_STRING_START = CombineChars("#t:s[");
@@ -125,6 +126,5 @@ var __BBON_Common;
     __BBON_Common.TYPE_OBJECT_CLOSE = CombineChars("#t:o]");
     __BBON_Common.TYPE_ARRAY_START = CombineChars("#t:a[");
     __BBON_Common.TYPE_ARRAY_CLOSE = CombineChars("#t:a]");
-    __BBON_Common.TYPE_ARRAY_VALUE = CombineChars("#t:a;");
+    __BBON_Common.TYPE_ARRAY_SEPAR = CombineChars("#t:a;");
 })(__BBON_Common = exports.__BBON_Common || (exports.__BBON_Common = {}));
-//# sourceMappingURL=bbon_common.js.map

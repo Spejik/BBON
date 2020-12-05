@@ -11,15 +11,11 @@ class __BBON_Serializer {
         let headerKeys = "";
         let headerChecksum = "";
         let content = "";
-        headerChecksum = "".concat(common.HEADER_CHECKSUM_START, common.GetChecksum(content), common.HEADER_CHECKSUM_CLOSE);
+        headerKeys = "".concat(common.HEADER_KEYS_START, common.GetChecksum(content), common.HEADER_KEYS_SEPAR, common.HEADER_KEYS_START);
+        headerChecksum = "".concat(common.HEADER_CHECKSUM_START, common.GetChecksum(headerKeys + content), common.HEADER_CHECKSUM_CLOSE);
         const header = "".concat(common.HEADER_START, headerKeys, headerChecksum, common.HEADER_CLOSE);
         const result = "".concat(header, content);
         return result;
     }
-    GetKeys() {
-        Object.values(this.data);
-        return [""];
-    }
 }
 exports.__BBON_Serializer = __BBON_Serializer;
-//# sourceMappingURL=bbon_serializer.js.map
