@@ -1,4 +1,2 @@
-exports.BBON = require("./src/js/bbon").BBON;
-
-// For es6 exports 
-// export { BBON } from "./src/js/bbon";
+exports.bbonSerialize = require("./src/js/cjs/bbon").bbonSerialize;
+exports.bbonUnserialize = require("./src/js/cjs/bbon").bbonUnserialize;

@@ -1,29 +1,39 @@
 {
-  "name": "bbon",
-  "version": "0.1.0",
+  "author": "Spej, Bexcool (bexcool.eu)",
+  "bugs": {
+    "url": "https://github.com/spejik/bbon/issues"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.10",
+    "tslib": "^2.0.3"
+  },
   "description": "BeXCool Binary Object Notation",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "node test.js"
+  "engines": {
+    "node": ">=14.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/spejik/bbon.git"
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.js"
   },
+  "homepage": "https://github.com/spejik/bbon#readme",
   "keywords": [
     "object",
     "binary",
     "bexcool",
     "json"
   ],
-  "author": "Spej, Bexcool (bexcool.eu)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/spejik/bbon/issues"
+  "license": "MIT",
+  "main": "index.js",
+  "name": "bbon",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spejik/bbon.git"
   },
-  "homepage": "https://github.com/spejik/bbon#readme",
-  "dependencies": {
-    "@types/node": "^14.14.10",
-    "tslib": "^2.0.3"
-  }
+  "scripts": {
+    "test": "node ./test/test.js",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --module es2015 --target es5 --outDir src/js/esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir src/js/cjs"
+  },
+  "version": "0.1.0"
 }

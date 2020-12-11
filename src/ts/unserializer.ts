@@ -1,4 +1,4 @@
-import { __BBON_Common } from "./bbon_common";
+import { __BBON_Common } from "./common";
 import common = __BBON_Common;
 
 export class __BBON_Unserializer {

@@ -8,13 +8,6 @@ declare type BBON_options = {
     errorCorrection: boolean;
     checksumKey: string;
 };
-/**
- * BBON Class
- */
-export declare class BBON {
-    options: BBON_options;
-    constructor(_options?: BBON_options);
-    Serialize(obj: object): string;
-    Unserialize(str: string): object;
-}
+export declare function bbonSerialize(val: any): string;
+export declare function bbonUnserialize(str: string, options: BBON_options): object;
 export {};
