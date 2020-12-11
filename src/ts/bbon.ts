@@ -1,6 +1,5 @@
-import { __BBON_Common } from "./bbon_common";
-import { __BBON_Serializer } from "./bbon_serializer";
-import { __BBON_Unserializer } from "./bbon_unserializer";
+import { __BBON_Serializer } from "./serializer";
+import { __BBON_Unserializer } from "./unserializer";
 
 /**
  * Type for bbon options
@@ -20,31 +19,15 @@ type BBON_options = {
  */
 const BBON_defaultOptions: BBON_options = {
     errorCorrection: false,
-    checksumKey: "meow... this is the BBON default checksumKey that you should not use",
+    checksumKey: "This is the default BBON HMAC-SHA256 checksum key that you can, but should not use.",
 };
 
-/**
- * BBON Class
- */
-export class BBON {
-    options: BBON_options;
+export function bbonSerialize(val: any) {
+    const serializer = new __BBON_Serializer(val);
+    return serializer.Serialize();
+}
 
-    constructor(_options: BBON_options = BBON_defaultOptions) {
-        if (_options.checksumKey == BBON_defaultOptions.checksumKey) {
-            console.warn("[BBON] Warning - Using default checksum key");
-        }
-
-        this.options = _options;
-        __BBON_Common.HMAC_KEY = this.options.checksumKey;
-    }
-
-    Serialize(obj: object): string {
-        const serializer = new __BBON_Serializer(obj);
-        return serializer.Serialize();
-    }
-
-    Unserialize(str: string): object {
-        const unserializer = new __BBON_Unserializer(str);
-        return unserializer.Unserialize();
-    }
+export function bbonUnserialize(str: string, options: BBON_options) {
+    const unserializer = new __BBON_Unserializer(str);
+    return unserializer.Unserialize();
 }

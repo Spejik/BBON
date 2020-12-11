@@ -3,13 +3,9 @@
 
 ## Terms used in this file
 
-### Control character
+### Control character (CC)
 
-- A sequence of characters whose character codes are combined into one number with the XOR ( ^ ) operator. The resulting number is then converted back to a character
-
-### CC
-
-- Short for Control Character
+- Any character code below 32
 
 ### Serializer
 
@@ -21,129 +17,186 @@
 - The "program" that reads BBON
 - Decoder
 
----
-
 ## A) Headers
 
-Headers are stored between control characters =?[ and =?]
+Headers are stored on the first line and are everything until a newline (0x0a) is found
 
-### 1. Format Version
+### I. Format Version
 
-    Headers must always contain the version of BBON Serializer that the object was serialized with.
-    If the version field is not present, the parser should return an error.
+Headers must contain the version of BBON Serializer that the object was serialized with.n  
+If the version field is not present, the parser should throw an error.
+Each part of the version has max size of 3 bytes.
 
-    
-    =v[ 1.2.3   =v]
+    0x01    001000025   0x01
 
-    Used CC:
-        Starting section checksum: =![
-        Closing  section checksum: =!]
+The version here is 1.0.25
 
-### 2. Checksum
+### II. Checksum
 
-    Headers must contain HMAC-SHA256 (base64 encoded) checksum of the
-    keys and the entire content after it was serialized.
-    Checksum validity must be checked everytime
-    when reading from the object.
+Headers can contain HMAC-SHA256 checksum of the entire content after it was serialized.  
+Checksum validity should be checked everytime when reading from the object.
 
+    0x02    abcdef...1234567890     0x02
 
-    =![ abcdef1234567890 =!]
+## B) Content
 
-    Used CC:
-        Starting section checksum: =![
-        Closing  section checksum: =!]
-        Value = Anything between 
+Content is saved immediately after the headers and it is everything until the end of file.  
+Each value must have a content type.  
+The content as a whole can have any type, not only object.
 
-B) Content
+### I. Types
 
-    Content is saved immediately after the headers
-    Keys for the values are saved as pointers (described in A.1)
-    Values must have a content type
-    The whole content is wrapped with an object called
-    BBON_MAIN, which will not be in the list of pointers, as it is
-    used only internally
+Types should be stored in an enum, as they are identified by a number and not their name.  
+Tables are used here to explain the data types and how they would look when actually used.  
+**Every value must end with a NULL byte (0x00)**
 
-    Used control characters:
-        ##{ - Start pointer at ID of the key
-        ##} - CLose pointer at ID of the key
-        #:{ - Start value
-        #:} - End value
-        #:; - Value separator
-    Types:
-        1. Boolean
-            CC - #t:b:
-            Value = 1 character after the CC
-            - Value = 0 => false
-            - Value = 1 => true
-            - If the value is anything else => false
-              - This can be changed with the setting errorCorrection
-        2. String
-            Starting CC - #t:s[
-            Closing  CC - #t:s]
-            Strings must be encoded with base64 (explained in A.1)
-            Value = Everything until Closing CC is found
-        3. Number
-            Starting CC - #t:n[
-            Closing  CC - #t:n]
-            Value = Everything until Closing CC is found
-        4. Object
-            Starting CC - #t:o[
-            Closing  CC - #t:o]
-            Value = Everything until Closing CC is found
-            This is basically an another BSON, but without headers and main object
-        5. Array
-            Starting CC - #t:a[
-            Closing  CC - #t:a]
-            Value separator - #t:a;
-            Value = Everything between Starting and Closing CC
-              - Each value must have an type and a separator after it (including the last item)
+#### 1. Number (double)
 
+CC = 0x01  
+If you need to store big numbers, use type [BigInt](#8.-BigInt) instead.  
+If the number is over a language-specific limit it may get encoded as "INF".  
+Size is hex encoded.
+
+| Type | Size | Value            |
+| ---- | ---- | ---------------- |
+| 0x01 | 0x09 | 123654789.987123 |
+
+#### 2. Boolean
+
+CC = 0x02  
+Value = single byte - 0 (false) or 1 (true)  
+Value can be modified by the option [errorCorrection](#errorCorrection)
+
+| Type | Value |
+| ---- | ----- |
+| 0x02 | 1     |
+
+#### 3. String
+
+CC = 0x03  
+Value may be encoded by the option [encodeStrings](#encodeStrings)  
+Length is hex encoded.
+
+| Type | Length | Value     |
+| ---- | ------ | --------- |
+| 0x03 | 0x09   | Meow Meow |
+
+#### 4. Object
+
+CC = 0x04  
+Size & Length are hex encoded.
+
+| Type | Size | Key Length\* | Key\* | Value* |
+| ---- | ---- | ------------ | ----- | ------ |
+| 0x04 | 0x01 | 0x04         | Meow  | ...... |
+
+\* - repeated per element
+
+#### 5. Array
+
+CC = 0x05  
+Size is count of all elements in the array.  
+Size is hex encoded.
+
+| Type | Size | Value* |
+| ---- | ---- | ------ |
+| 0x05 | 0x01 | ...... |
+
+\* - repeated per element
+
+#### 6. Date
+
+CC = 0x06  
+Date is written as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
+Is basically just a string that creates a Date object upon unserialization.
+Length is hex encoded.
+
+| Type | Length | Value                    |
+| ---- | ------ | ------------------------ |
+| 0x06 | 0x24   | 2020-01-01T00:00:00.000Z |
+
+The value should always be 24 characters, but it's better to store the length.
+
+#### 7. Null
+
+CC = 0x07
+
+Does not have a value.
+
+#### 8. BigInt
+
+CC = 0x08  
+Has almost no limits on how big it can be.
+Size is hex encoded.
+
+| Type | Size | Value                              |
+| ---- | ---- | ---------------------------------- |
+| 0x08 | 0x34 | 3126546516516486488466135164897789 |
+
+## Options
+
+Note: Some options may have different capitalization because of the language style.
+
+### errorCorrection
+
+Type: `Boolean`  
+Default: `false`
+
+If a boolean contains anything else than 0 or 1, set it's value to 1
+
+### encodeStrings
+
+Type: `Boolean | String`  
+Default: `false`  
+Default if `true`: `"base64"`  
+Available options (String): `"base64" | "hex"`
+
+All strings will be encoded with the specified algorithm (doesn't get changed by the [checksumKey](#checksumKey))
+
+### encodeKeys
+
+Type: `Boolean`  
+Default: `true`  
+Default if encodeStrings is disabled: `"base64"`  
+Uses the same algorithm as [encodeStrings](#encodeStrings)
+
+### includeChecksum
+
+Type: `Boolean`
+Default: `true`
+
+Headers won't contain a checksum if this option is set to false.  
+Must also be enabled while reading from the object, else error InvalidChecksum will be thrown.
+
+### checksumKey
+
+Type: `String`  
+Default: `"This is the default BBON HMAC-SHA256 checksum key that you can, but should not use."`
+
+Key for HMAC to generate unique checksum.  
+If two same objects are serialized two different checksum keys, the checksums should be different.  
+[includeChecksum](#includeChecksum) must be enabled for this option to have any effect.
 
 # EXAMPLE BBON
 
-  =?[
-      =&[
-          0:Name;
-          1:IPs;
-          2:Cats;
-          3:Premium;
-          4:RandomObject;
-      =&]
+Comments are marked with `#`, but they aren't allowed in normally generated BBON.  
+Note: Control Characters are marked as 0x00
 
-      =![
-          .....
-      =!]
-  =?]
-  BBON_MAIN
-  #:{
-      ##{ 0   ##}
-      #:{
-          #t:s[   (base64) AnExampleName     #t:s]
-      #:}
-      ##{ 1   ##}
-      #:{
-          #t:a[
-              #t:s[   (base64) AnExampleIP     #t:s]   #t:a;
-              #t:s[   (base64) Another__IP     #t:s]   #t:a;
-          #t:a]
-      #:}
-      ##{ 2   ##}
-      #:{
-          #t:n[   123456789  #t:n]
-      #:}
-      ##{ 3   ##}
-      #:{
-          #t:b:   1
-      #:}
-      ##{ 4   ##}
-      #:{
-          #t:o[
-              ##{ 0   ##}
-              #:{
-                  #t:s[   (base64) ThisIsAVeryRandomLookingString     #t:s]
-              #:}
-          #t:o]
-      #:}
-  #:}
+```md
+# Headers
+# Version...........    Checksum.............    Headers ending (newline)
+0x01 001001025  0x01    0x02 (checksum)  0x02    0x0a
 
-/
+# Content
+# Object, size 2
+0x04    0x02
+
+# Element with key length of 4, value type is Boolean (false)
+    0x04    Bool    0x02    0   0x00
+
+# Element with key length of 3, value type is String with length of 27
+    0x03    Str     0x03    0x27     A wild String just appeared    0x00
+
+# Ending of the object
+0x00
+```
